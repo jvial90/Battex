@@ -3,104 +3,215 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Check, Star, Sparkles, Rocket, Shield, Zap, ArrowRight, Award, Leaf } from "lucide-react";
+import { Mail } from "lucide-react";
 
-const BRAND = {
-  name: "NovaFlow",
-  tagline: "Launch faster. Scale smarter.",
-  ctaPrimary: "Get Early Access",
-  ctaSecondary: "Book a Demo",
-  brandColor: "from-indigo-500 via-violet-500 to-fuchsia-500",
-  highlight: "text-indigo-600",
+/** ======== THEME (edit here) ======== */
+const THEME = {
+  brand: "BATTEX",
+  primary: "#5B21E6", // morado Battex del deck (ajústalo si tienes el hex exacto)
+  gradient: "from-[#5B21E6] via-[#7C3AED] to-[#A78BFA]",
+  logo: "/logo-battex.png", // coloca tu logo en /public
+  email: "contacto@battex.cl",
+  phone: "+56 9 8231 3188",
 };
 
-const FEATURES = [
-  { icon: <Zap className="h-6 w-6" />, title: "Blazing Setup", desc: "Spin up workflows in minutes with zero-code templates and delightful defaults." },
-  { icon: <Shield className="h-6 w-6" />, title: "Enterprise-Grade", desc: "SSO, RBAC, and audit trails baked in. Security that scales with you." },
-  { icon: <Rocket className="h-6 w-6" />, title: "Auto-Optimize", desc: "AI tunes performance and cost in real time—so you don’t have to." },
-  { icon: <Leaf className="h-6 w-6" />, title: "Sustainable by Design", desc: "Lower compute, lower costs, lower footprint. Better for your margins and the planet." },
-];
-
-const LOGOS = ["Acme", "Blumr", "Helix", "Nimbus", "Orbit", "Polar"];
-
-const PLANS = [
-  { name: "Starter", price: "$0", cadence: "/mo", highlight: false, features: ["Up to 3 projects", "Community support", "Core automations"] },
-  { name: "Growth", price: "$39", cadence: "/mo", highlight: true, features: ["Unlimited projects", "Priority support", "AI optimization"] },
-  { name: "Scale", price: "Let's talk", cadence: "", highlight: false, features: ["SAML/SSO", "Dedicated success", "Custom SLAs"] },
-];
-
-export default function LandingPage() {
+/** Reusable section shell */
+function Section({ id, title, children }: { id?: string; title?: string; children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-slate-50 text-slate-800">
-      <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-slate-200/60">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className={`h-8 w-8 rounded-xl bg-gradient-to-br ${BRAND.brandColor}`}></div>
-            <span className="font-semibold text-lg">{BRAND.name}</span>
+    <section id={id} className="py-16 sm:py-20">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        {title && <h2 className="text-3xl md:text-4xl font-bold tracking-tight">{title}</h2>}
+        <div className={title ? "mt-6" : ""}>{children}</div>
+      </div>
+    </section>
+  );
+}
+
+export default function Home() {
+  return (
+    <main className="min-h-screen bg-gradient-to-b from-white to-slate-50 text-slate-900">
+      {/* Header */}
+      <header className="sticky top-0 z-40 border-b border-slate-200/60 bg-white/70 backdrop-blur">
+        <div className="mx-auto max-w-6xl h-16 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="h-8 w-8 rounded-xl" style={{ background: THEME.primary }} />
+            <span className="font-semibold text-lg">{THEME.brand}</span>
           </div>
           <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600">
-            <a href="#features" className="hover:text-slate-900">Features</a>
-            <a href="#pricing" className="hover:text-slate-900">Pricing</a>
-            <a href="#faq" className="hover:text-slate-900">FAQ</a>
-            <Button variant="ghost" className="rounded-2xl">{BRAND.ctaSecondary}</Button>
-            <Button className="rounded-2xl">{BRAND.ctaPrimary}</Button>
+            <a href="#problemas" className="hover:text-slate-900">Problemas</a>
+            <a href="#como" className="hover:text-slate-900">¿Cómo funciona?</a>
+            <a href="#modelo" className="hover:text-slate-900">Modelo Battex</a>
+            <a href="#equipo" className="hover:text-slate-900">Equipo</a>
+            <a href="#contacto" className="hover:text-slate-900">Contacto</a>
+            <Button className="rounded-2xl" style={{ backgroundColor: THEME.primary }}>Solicitar asesoría</Button>
           </nav>
-          <div className="md:hidden">
-            <Button variant="ghost" size="icon" aria-label="menu">
-              <span className="i-lucide-menu" />
-            </Button>
-          </div>
         </div>
       </header>
 
+      {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className={`absolute inset-0 -z-10 bg-gradient-to-br ${BRAND.brandColor} opacity-10`} />
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 md:py-28">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-              <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600 shadow-sm">
-                <Sparkles className="h-4 w-4" /> New: Smart Runbooks
-              </div>
-              <h1 className="mt-5 text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1]">
-                {BRAND.tagline} <span className={`${BRAND.highlight}`}>with {BRAND.name}</span>
-              </h1>
-              <p className="mt-5 text-lg text-slate-600 max-w-xl">
-                Ship features in days, not months. {BRAND.name} automates your ops and optimizes costs—so your team can focus on what matters.
-              </p>
-              <form className="mt-8 flex w-full max-w-md gap-3">
-                <Input placeholder="you@company.com" className="h-12 rounded-2xl" />
-                <Button className="h-12 rounded-2xl px-6">{BRAND.ctaPrimary} <ArrowRight className="ml-2 h-4 w-4" /></Button>
-              </form>
-              <div className="mt-5 flex items-center gap-2 text-xs text-slate-500">
-                <Check className="h-4 w-4" /> No credit card needed
-                <Check className="h-4 w-4" /> 14-day free trial
-                <Check className="h-4 w-4" /> Cancel anytime
-              </div>
-            </motion.div>
+        <div className={`absolute inset-0 -z-10 opacity-10 bg-gradient-to-br ${THEME.gradient}`} />
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 md:py-24 grid lg:grid-cols-2 gap-10 items-center">
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+            <img src={THEME.logo} alt="Battex" className="h-10 w-auto mb-6" />
+            <h1 className="text-4xl md:text-5xl font-extrabold leading-[1.1]">
+              Expertos en soluciones energéticas
+            </h1>
+            <p className="mt-4 text-lg text-slate-700">
+              Nuestro objetivo es ayudar a <b>industrias</b> a <b>eficientar su consumo eléctrico</b>.
+            </p>
+            <div className="mt-8 flex w-full max-w-md gap-3">
+              <Input placeholder="tu@empresa.com" className="h-12 rounded-2xl" />
+              <Button className="h-12 rounded-2xl px-6" style={{ backgroundColor: THEME.primary }}>
+                Contáctanos
+              </Button>
+            </div>
+            <p className="mt-3 text-xs text-slate-500">Sin compromiso. Respuesta en 24–48h.</p>
+          </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }} className="relative">
-              <div className="absolute -inset-4 -z-10 blur-3xl opacity-30 bg-gradient-to-r from-indigo-400 to-fuchsia-400 rounded-full" />
-              <Card className="rounded-3xl shadow-xl">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2"><Rocket className="h-5 w-5"/>Live Preview</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="aspect-video w-full rounded-2xl border border-slate-200 bg-white grid place-items-center">
-                    <div className="text-center p-6">
-                      <div className="text-5xl font-black tracking-tight">⚡</div>
-                      <p className="mt-3 text-sm text-slate-500">Embed a short product video or screenshot carousel here.</p>
-                    </div>
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.05 }}>
+            <Card className="rounded-3xl shadow-xl">
+              <CardContent className="p-6">
+                <div className="aspect-video w-full rounded-2xl border border-slate-200 bg-white grid place-items-center">
+                  <div className="text-center p-6">
+                    <div className="text-5xl">🔋</div>
+                    <p className="mt-3 text-sm text-slate-500">Agrega aquí una imagen/diagrama de tu solución.</p>
                   </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
         </div>
       </section>
-    </div>
+
+      {/* Problemas → Propuesta de valor (del slide) */}
+      <Section id="problemas" title="Problemas que resolvemos">
+        <div className="grid md:grid-cols-2 gap-6">
+          <Card className="rounded-2xl">
+            <CardContent className="p-6">
+              <h3 className="font-semibold">Tarifas eléctricas en aumento</h3>
+              <p className="mt-2 text-sm text-slate-700">
+                Disminución del cobro por <b>“Potencia de Punta”</b> y <b>arbitraje de precios</b> mediante almacenamiento.
+              </p>
+            </CardContent>
+          </Card>
+          <Card className="rounded-2xl">
+            <CardContent className="p-6">
+              <h3 className="font-semibold">Cortes de suministro más frecuentes</h3>
+              <p className="mt-2 text-sm text-slate-700">
+                <b>Batería como respaldo eléctrico</b> para continuidad operacional.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </Section>
+
+      {/* ¿Cómo funciona Battex? */}
+      <Section id="como" title="¿Cómo funciona Battex?">
+        <div className="grid md:grid-cols-3 gap-6">
+          {[
+            { n: "1.", t: "Instalamos la batería en tus instalaciones." },
+            { n: "2.", t: "Operamos la batería para evitar consumo cuando la electricidad es cara (carga/descarga óptima)." },
+            { n: "3.", t: "Damos respaldo inmediato ante cortes y complementamos grupos electrógenos para bajar costos y emisiones." },
+          ].map((step) => (
+            <Card key={step.n} className="rounded-2xl border border-slate-200">
+              <CardContent className="p-6">
+                <div className="text-2xl font-black" style={{ color: THEME.primary }}>{step.n}</div>
+                <p className="mt-3 text-sm text-slate-700">{step.t}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </Section>
+
+      {/* Modelo Battex */}
+      <Section id="modelo" title="Modelo Battex">
+        <div className="grid md:grid-cols-3 gap-6">
+          {[
+            { h: "Autofinanciado", d: "Operación óptima con IA para máximo ahorro con menor inversión." },
+            { h: "Co-financiado", d: "Compartimos ahorros por un período; reduces CAPEX inicial." },
+            { h: "100% financiamiento", d: "Sin inversión inicial; Battex recupera vía ahorros por años limitados." },
+          ].map((m) => (
+            <Card key={m.h} className="rounded-2xl">
+              <CardContent className="p-6">
+                <div className="font-semibold">{m.h}</div>
+                <p className="mt-2 text-sm text-slate-700">{m.d}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+        <div className="mt-6 text-sm text-slate-500">
+          Operación remota y esquemas de carga/descarga que no afectan la operación normal de tu planta.
+        </div>
+      </Section>
+
+      {/* Equipo */}
+      <Section id="equipo" title="Equipo">
+        <div className="grid md:grid-cols-3 gap-6">
+          {[
+            {
+              n: "Maximiliano ZaÑartu",
+              r: "Co-founder. Ing. civil industrial eléctrico PUC, MBA IESE. +10 años en distribución, transmisión y generación.",
+              e: "mzanartu@battex.cl",
+            },
+            {
+              n: "Juan Luis Vial",
+              r: "Co-founder. Ing. civil industrial eléctrico PUC, MBA Green Energies & Sustainable Business. +10 años en regulación y mercados eléctricos.",
+              e: "jvial@battex.cl",
+            },
+            {
+              n: "Javier Calvo",
+              r: "Co-founder. Ing. civil mecánico PUC, Master Sustainable Energy Systems. +10 años en sistemas de energía térmica.",
+              e: "—",
+            },
+          ].map((p) => (
+            <Card key={p.n} className="rounded-2xl">
+              <CardContent className="p-6">
+                <div className="font-semibold">{p.n}</div>
+                <p className="mt-2 text-sm text-slate-700">{p.r}</p>
+                {p.e !== "—" && <p className="mt-2 text-xs text-slate-500">{p.e}</p>}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </Section>
+
+      {/* CTA / Contacto */}
+      <Section id="contacto">
+        <div className="rounded-3xl border border-slate-200 bg-white p-8 md:p-12 text-center shadow-sm">
+          <h3 className="text-2xl md:text-3xl font-bold">Contáctanos para evaluar tu solución y bajar tus costos eléctricos</h3>
+          <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <div className="relative w-full max-w-md">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+              <Input placeholder="tu@empresa.com" className="pl-9 h-12 rounded-2xl" />
+            </div>
+            <Button size="lg" className="rounded-2xl" style={{ backgroundColor: THEME.primary }}>
+              Enviar
+            </Button>
+          </div>
+          <p className="mt-4 text-sm text-slate-600">
+            También puedes escribirnos a <a className="underline" href={`mailto:${THEME.email}`}>{THEME.email}</a> o llamar al {THEME.phone}.
+          </p>
+        </div>
+      </Section>
+
+      {/* Footer */}
+      <footer className="py-10 border-t border-slate-200">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-500">
+          <div className="flex items-center gap-2">
+            <div className="h-6 w-6 rounded-lg" style={{ background: THEME.primary }} />
+            <span>© {new Date().getFullYear()} {THEME.brand}. Todos los derechos reservados.</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <a href="#" className="hover:text-slate-700">Privacidad</a>
+            <a href="#" className="hover:text-slate-700">Términos</a>
+            <a href="#" className="hover:text-slate-700">Seguridad</a>
+          </div>
+        </div>
+      </footer>
+    </main>
   );
 }
 
