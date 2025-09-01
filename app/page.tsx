@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -72,16 +73,25 @@ export default function Home() {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.05 }}>
-            <Card className="rounded-3xl shadow-xl">
-              <CardContent className="p-6">
-                <div className="aspect-video w-full rounded-2xl border border-slate-200 bg-white grid place-items-center">
-                  <div className="text-center p-6">
-                    <div className="text-5xl">🔋</div>
-                    <p className="mt-3 text-sm text-slate-500">Agrega aquí una imagen/diagrama de tu solución.</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+
+<Card className="rounded-3xl shadow-xl">
+  <CardContent className="p-4">
+    <Image
+      src="/diagrama.png"
+      alt="Perfil de consumo: carga y descarga de la batería"
+      width={960}
+      height={480}
+      className="w-full h-auto rounded-2xl border border-slate-200"
+      priority
+    />
+    <p className="mt-2 text-xs text-slate-500 text-center">
+      Perfil de consumo diario: carga y descarga óptima de la batería.
+    </p>
+  </CardContent>
+</Card>
+
+
+
           </motion.div>
         </div>
       </section>
@@ -116,12 +126,29 @@ export default function Home() {
             { n: "2.", t: "Operamos la batería para evitar consumo cuando la electricidad es cara (carga/descarga óptima)." },
             { n: "3.", t: "Damos respaldo inmediato ante cortes y complementamos grupos electrógenos para bajar costos y emisiones." },
           ].map((step) => (
-            <Card key={step.n} className="rounded-2xl border border-slate-200">
-              <CardContent className="p-6">
-                <div className="text-2xl font-black" style={{ color: THEME.primary }}>{step.n}</div>
-                <p className="mt-3 text-sm text-slate-700">{step.t}</p>
-              </CardContent>
-            </Card>
+<Card className="rounded-2xl border border-slate-200">
+  <CardContent className="p-6">
+    <div className="text-2xl font-black" style={{ color: THEME.primary }}>2.</div>
+    <p className="mt-3 text-sm text-slate-700">
+      Operamos la batería para evitar consumo cuando la electricidad es cara (carga/descarga óptima).
+    </p>
+
+    <div className="mt-4 rounded-2xl overflow-hidden border border-slate-200 bg-white">
+      <Image
+        src="/diagrama.png"     // <-- file you put in /public
+        alt="Perfil de consumo: carga y descarga de la batería a lo largo del día"
+        width={960}
+        height={480}
+        className="w-full h-auto"
+        priority
+      />
+    </div>
+
+    <p className="mt-2 text-xs text-slate-500 text-center">
+      Ilustración de carga/descarga y perfil de consumo a lo largo del día.
+    </p>
+  </CardContent>
+</Card>
           ))}
         </div>
       </Section>
