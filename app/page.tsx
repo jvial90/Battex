@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
-import React from "react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { motion } from "framer-motion";
 import { Mail } from "lucide-react";
+import Image from "next/image";
+import React from "react";
 
 /** ======== THEME (edit here) ======== */
 const THEME = {
@@ -122,34 +122,32 @@ export default function Home() {
       <Section id="como" title="¿Cómo funciona Battex?">
         <div className="grid md:grid-cols-3 gap-6">
           {[
-            { n: "1.", t: "Instalamos la batería en tus instalaciones." },
-            { n: "2.", t: "Operamos la batería para evitar consumo cuando la electricidad es cara (carga/descarga óptima)." },
-            { n: "3.", t: "Damos respaldo inmediato ante cortes y complementamos grupos electrógenos para bajar costos y emisiones." },
-          ].map((step) => (
-<Card className="rounded-2xl border border-slate-200">
-  <CardContent className="p-6">
-    <div className="text-2xl font-black" style={{ color: THEME.primary }}>2.</div>
-    <p className="mt-3 text-sm text-slate-700">
-      Operamos la batería para evitar consumo cuando la electricidad es cara (carga/descarga óptima).
-    </p>
+  { n: "1.", t: "Instalamos la batería en tus instalaciones." },
+  { n: "2.", t: "Operamos la batería para evitar consumo cuando la electricidad es cara (carga/descarga óptima)." },
+  { n: "3.", t: "Damos respaldo inmediato ante cortes y complementamos grupos electrógenos para bajar costos y emisiones." },
+].map((step) => (
+  <Card key={step.n} className="rounded-2xl border border-slate-200">
+    <CardContent className="p-6">
+      <div className="text-2xl font-black" style={{ color: THEME.primary }}>
+        {step.n}
+      </div>
+      <p className="mt-3 text-sm text-slate-700">{step.t}</p>
 
-    <div className="mt-4 rounded-2xl overflow-hidden border border-slate-200 bg-white">
-      <Image
-        src="/diagrama.png"     // <-- file you put in /public
-        alt="Perfil de consumo: carga y descarga de la batería a lo largo del día"
-        width={960}
-        height={480}
-        className="w-full h-auto"
-        priority
-      />
-    </div>
-
-    <p className="mt-2 text-xs text-slate-500 text-center">
-      Ilustración de carga/descarga y perfil de consumo a lo largo del día.
-    </p>
-  </CardContent>
-</Card>
-          ))}
+      {step.n === "2." && (
+        <div className="mt-4 rounded-2xl overflow-hidden border border-slate-200 bg-white">
+          <Image
+            src="/diagrama.png" // ensure file exists in /public
+            alt="Perfil de consumo: carga y descarga de la batería a lo largo del día"
+            width={960}
+            height={480}
+            className="w-full h-auto"
+            priority
+          />
+        </div>
+      )}
+    </CardContent>
+  </Card>
+))}
         </div>
       </Section>
 
