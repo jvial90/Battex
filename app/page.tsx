@@ -11,10 +11,10 @@ import React from "react";
 /** ======== THEME (edit here) ======== */
 const THEME = {
   brand: "BATTEX",
-  primary: "#5B21E6", // morado Battex del deck (ajústalo si tienes el hex exacto)
+  primary: "#5B21E6", // morado Battex
   gradient: "from-[#5B21E6] via-[#7C3AED] to-[#A78BFA]",
   logo: "/logo-battex.png", // coloca tu logo en /public
-  email: "contacto@battex.cl",
+  email: "mzanartu@battex.cl",
   phone: "+56 9 8231 3188",
 };
 
@@ -97,21 +97,21 @@ export default function Home() {
       </section>
 
       {/* Problemas → Propuesta de valor (del slide) */}
-      <Section id="problemas" title="Problemas que resolvemos">
+      <Section id="problemas" title="Cómo te ayudamos">
         <div className="grid md:grid-cols-2 gap-6">
           <Card className="rounded-2xl">
             <CardContent className="p-6">
-              <h3 className="font-semibold">Tarifas eléctricas en aumento</h3>
+              <h3 className="font-semibold">Reducir tu costo eléctrico</h3>
               <p className="mt-2 text-sm text-slate-700">
-                Disminución del cobro por <b>“Potencia de Punta”</b> y <b>arbitraje de precios</b> mediante almacenamiento.
+                Disminución del cobro por <b>Potencia de Punta</b> y <b>Precio de Energía</b> con nuestras sistemas BESS inteligentes
               </p>
             </CardContent>
           </Card>
           <Card className="rounded-2xl">
             <CardContent className="p-6">
-              <h3 className="font-semibold">Cortes de suministro más frecuentes</h3>
+              <h3 className="font-semibold">Respaldo y confiabilidad en tu suministro</h3>
               <p className="mt-2 text-sm text-slate-700">
-                <b>Batería como respaldo eléctrico</b> para continuidad operacional.
+                <b>Batería como respaldo eléctrico</b> para continuidad operacional
               </p>
             </CardContent>
           </Card>
@@ -122,9 +122,9 @@ export default function Home() {
       <Section id="como" title="¿Cómo funciona Battex?">
         <div className="grid md:grid-cols-3 gap-6">
           {[
-  { n: "1.", t: "Instalamos la batería en tus instalaciones." },
-  { n: "2.", t: "Operamos la batería para evitar consumo cuando la electricidad es cara (carga/descarga óptima)." },
-  { n: "3.", t: "Damos respaldo inmediato ante cortes y complementamos grupos electrógenos para bajar costos y emisiones." },
+  { n: "1.", t: "Diseñamos el proyecto a tus necesidades e instalamos la batería" },
+  { n: "2.", t: "Operamos la batería de manera óptima con nuestro software AI" },
+  { n: "3.", t: "Damos respaldo inmediato ante cortes y complementamos grupos electrógenos para bajar tus costos y emisiones" },
 ].map((step) => (
   <Card key={step.n} className="rounded-2xl border border-slate-200">
     <CardContent className="p-6">
