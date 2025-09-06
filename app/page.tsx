@@ -65,7 +65,7 @@ export default function Home() {
       </header>
 
       {/* Hero */}
-      + <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden">
        {/* soft radial glow */}
       <div
         className="pointer-events-none absolute -top-40 -left-40 h-[520px] w-[520px] rounded-full opacity-30 blur-3xl"
