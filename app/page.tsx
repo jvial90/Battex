@@ -36,10 +36,20 @@ export default function Home() {
       {/* Header */}
       <header className="sticky top-0 z-40 border-b border-slate-200/60 bg-white/70 backdrop-blur">
         <div className="mx-auto max-w-6xl h-16 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-xl" style={{ background: THEME.primary }} />
-            <span className="font-semibold text-lg">{THEME.brand}</span>
-          </div>
+          <div className="flex items-center gap-2">
+  {/* Purple box stays */}
+  <div className="h-8 w-8 rounded-xl" style={{ background: THEME.primary }} />
+
+  {/* Actual logo next to it */}
+  <Image
+    src="/logo-battex.png"
+    alt="Battex logo"
+    width={100}   // tweak until it balances with the box
+    height={24}
+    className="h-6 w-auto"
+    priority
+  />
+</div>
           <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600">
             <a href="#problemas" className="hover:text-slate-900">Problemas</a>
             <a href="#como" className="hover:text-slate-900">¿Cómo funciona?</a>
