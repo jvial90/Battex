@@ -75,7 +75,10 @@ export default function Home() {
             </p>
             <div className="mt-8 flex w-full max-w-md gap-3">
               <Input placeholder="tu@empresa.com" className="h-12 rounded-2xl" />
-              <Button className="h-12 rounded-2xl px-6" style={{ backgroundColor: THEME.primary }}>
+              <Button className="rounded-2xl transition-colors
+             bg-[#5B21E6]
+             hover:bg-gradient-to-r hover:from-[#5B21E6] hover:to-[#A78BFA]
+             text-white shadow-sm hover:shadow">
                 Contáctanos
               </Button>
             </div>
