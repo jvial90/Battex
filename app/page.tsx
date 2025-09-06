@@ -65,7 +65,17 @@ export default function Home() {
       </header>
 
       {/* Hero */}
-      <section className="relative overflow-hidden">
+      + <section className="relative overflow-hidden">
+       {/* soft radial glow */}
+      <div
+        className="pointer-events-none absolute -top-40 -left-40 h-[520px] w-[520px] rounded-full opacity-30 blur-3xl"
+         style={{ background: 'radial-gradient(50% 50% at 50% 50%, #A78BFA 0%, rgba(167,139,250,0) 70%)' }}
+      />
+      <div
+        className="pointer-events-none absolute -bottom-40 -right-40 h-[520px] w-[520px] rounded-full opacity-25 blur-3xl"
+        style={{ background: 'radial-gradient(50% 50% at 50% 50%, #5B21E6 0%, rgba(91,33,230,0) 70%)' }}
+      />
+
         <div className={`absolute inset-0 -z-10 opacity-10 bg-gradient-to-br ${THEME.gradient}`} />
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 md:py-24 grid lg:grid-cols-2 gap-10 items-center">
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
