@@ -17,12 +17,13 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
 
+  metadataBase: new URL("https://battex.cl"),
   title: "Battex — Expertos en Soluciones Energéticas",
   description: "Nuestro objetivo es ayudar a industrias a eficientar su consumo eléctrico",
   icons: {
-    icon: "/favicon web.png",        // fallback
-    shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: "/tab-logo.png",         // your new gradient B favicon
+    shortcut: "/tab-logo.png",     // for browsers that look for shortcut
+    apple: "/tab-logo.png",        // also works for iOS unless you provide a bigger 180x180
  	 },
   openGraph: {
     title: "Battex",
