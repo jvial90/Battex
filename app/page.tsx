@@ -56,7 +56,10 @@ export default function Home() {
             <a href="#modelo" className="hover:text-slate-900">Modelo Battex</a>
             <a href="#equipo" className="hover:text-slate-900">Equipo</a>
             <a href="#contacto" className="hover:text-slate-900">Contacto</a>
-            <Button className="rounded-2xl" style={{ backgroundColor: THEME.primary }}>Solicitar asesoría</Button>
+            <Button className="rounded-2xl transition-colors
+             bg-[#5B21E6]
+             hover:bg-gradient-to-r hover:from-[#5B21E6] hover:to-[#A78BFA]
+             text-white shadow-sm hover:shadow">Solicitar asesoría</Button>
           </nav>
         </div>
       </header>
@@ -225,7 +228,10 @@ export default function Home() {
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
               <Input placeholder="tu@empresa.com" className="pl-9 h-12 rounded-2xl" />
             </div>
-            <Button size="lg" className="rounded-2xl" style={{ backgroundColor: THEME.primary }}>
+            <Button size="lg" className="rounded-2xl transition-colors
+             bg-[#5B21E6]
+             hover:bg-gradient-to-r hover:from-[#5B21E6] hover:to-[#A78BFA]
+             text-white shadow-sm hover:shadow">
               Enviar
             </Button>
           </div>
