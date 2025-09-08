@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { Mail } from "lucide-react";
 import Image from "next/image";
 import React from "react";
+import AnimatedEnergyCard from "../components/energy/AnimatedEnergyCard";
 
 /** ======== THEME (edit here) ======== */
 const THEME = {
@@ -51,7 +52,7 @@ export default function Home() {
   />
 </div>
           <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600">
-            <a href="#problemas" className="hover:text-slate-900">Problemas</a>
+            <a href="#problemas" className="hover:text-slate-900">Nuestra Misión</a>
             <a href="#como" className="hover:text-slate-900">¿Cómo funciona?</a>
             <a href="#modelo" className="hover:text-slate-900">Modelo Battex</a>
             <a href="#equipo" className="hover:text-slate-900">Equipo</a>
@@ -100,22 +101,8 @@ export default function Home() {
 
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.05 }}>
 
-<Card className="rounded-3xl shadow-xl">
-  <CardContent className="p-4">
-    <Image
-      src="/diagrama.png"
-      alt="Perfil de consumo: carga y descarga de la batería"
-      width={960}
-      height={480}
-      className="w-full h-auto rounded-2xl border border-slate-200"
-      priority
-    />
-    <p className="mt-2 text-xs text-slate-500 text-center">
-      Perfil de consumo diario: carga y descarga óptima de la batería.
-    </p>
-  </CardContent>
-</Card>
 
+          <AnimatedEnergyCard durationSec={5} />
 
 
           </motion.div>
