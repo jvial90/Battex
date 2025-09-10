@@ -202,7 +202,7 @@ function LegendSwatch({ label, fill, stroke }: { label: string; fill: string; st
 
 // === Vertical Battery Icon (purple bars, synced windows) ===
 function BatteryIconVertical({ durationSec }: { durationSec: number }) {
-  const W = 56; // doubled width
+  const W = 48; // doubled width
   const H = 108;
   const stroke = "#ffffff";
   const purple = "#A78BFA";
