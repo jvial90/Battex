@@ -146,6 +146,8 @@ const TEAM: TeamMember[] = [
 
 
 
+
+
 // Home!!
 export default function Home() {
    const headerMode = useHeaderMode("after-hero", 64); // "hero" | "content"
@@ -159,6 +161,29 @@ const SECTIONS = [
 
 const activeId = useActiveSection(SECTIONS.map(s => s.id), 96);
 
+// --- Google Forms submission state/handlers ---
+const [leadEmail, setLeadEmail] = React.useState("");
+const [submitting, setSubmitting] = React.useState(false);
+const [submitted, setSubmitted] = React.useState(false);
+const [ok, setOk] = React.useState<null | boolean>(null);
+
+function handleGFormSubmit(e: React.FormEvent) {
+  // The POST goes straight to Google; we just flag the UI
+  setSubmitting(true);
+  setOk(null);
+  setSubmitted(true);
+}
+
+function handleIframeLoad() {
+  // The hidden iframe loads once on mount and again after submit.
+  // Only act after a submit.
+  if (submitted) {
+    setSubmitting(false);
+    setOk(true);
+    setLeadEmail("");
+    setSubmitted(false);
+  }
+}
   return (
     <main className="min-h-screen bg-gradient-to-b from-white to-slate-50 text-slate-900">
       
@@ -187,8 +212,6 @@ const activeId = useActiveSection(SECTIONS.map(s => s.id), 96);
     priority
   />
 </div>
-
-
 
          <nav aria-label="Primary" className="hidden md:flex items-center">
   <div
@@ -228,10 +251,8 @@ const activeId = useActiveSection(SECTIONS.map(s => s.id), 96);
   </div>
 </nav>
 
-
         </div>
       </header>
-
 
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -255,15 +276,53 @@ const activeId = useActiveSection(SECTIONS.map(s => s.id), 96);
             <p className="mt-4 text-lg text-slate-700">
               Innovando para apoyar <b>industrias</b> a <b>eficientar su consumo eléctrico</b>.
             </p>
-            <div className="mt-8 flex w-full max-w-md gap-3">
-              <Input placeholder="tu@empresa.com" className="h-12 rounded-2xl" />
-              <Button className="rounded-2xl transition-colors
-             bg-[#5B21E6]
-             hover:bg-gradient-to-r hover:from-[#5B21E6] hover:to-[#A78BFA]
-             text-white shadow-sm hover:shadow">
-                Armemos tu proyecto
-              </Button>
-            </div>
+            
+            {/* Hidden iframe keeps the page in place and lets us detect completion */}
+<iframe
+  name="gform_hidden_iframe"
+  style={{ display: "none" }}
+  onLoad={handleIframeLoad}
+/>
+
+{/* Form posts directly to Google Forms */}
+<form
+  action="https://docs.google.com/forms/d/e/1FAIpQLSdEkTW_520j7NSikTBe5Qd3DyI4VheM1BFT4id9UrB8-hA1SA/formResponse"
+  method="POST"
+  target="gform_hidden_iframe"
+  onSubmit={handleGFormSubmit}
+  className="mt-8 flex w-full max-w-md gap-3"
+>
+  {/* IMPORTANT: name MUST be entry.<ENTRY_ID> from your Google Form */}
+  <Input
+    type="email"
+    name="entry.586447229"
+    value={leadEmail}
+    onChange={(e) => setLeadEmail(e.target.value)}
+    placeholder="tu@empresa.com"
+    className="h-12 rounded-2xl"
+    required
+  />
+
+  <Button
+    type="submit"
+    disabled={submitting}
+    className="rounded-2xl transition-colors
+               bg-[#5B21E6]
+               hover:bg-gradient-to-r hover:from-[#5B21E6] hover:to-[#A78BFA]
+               text-white shadow-sm hover:shadow"
+  >
+    {submitting ? "Enviando…" : "Armemos tu proyecto"}
+  </Button>
+</form>
+
+{/* Feedback message */}
+{ok === true && (
+  <p className="mt-3 text-xs text-green-600">
+    ¡Gracias! Te contactaremos pronto.
+  </p>
+)}
+
+
             {/*<p className="mt-3 text-xs text-slate-500">Sin compromiso. Respuesta en 24–48h.</p>*/}
 
           </motion.div>
@@ -286,7 +345,6 @@ const activeId = useActiveSection(SECTIONS.map(s => s.id), 96);
 <Section id="soluciones" title="Soluciones">
   <SolutionsCarousel autoMs={5000} />
 </Section>
-
 
 
 
