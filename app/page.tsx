@@ -121,7 +121,7 @@ const TEAM: TeamMember[] = [
   {
     name: "Maximiliano ZaÑartu",
     bio:
-      "Co-founder. Ing. civil industrial eléctrico PUC, MBA IESE. +10 años en distribución, transmisión y generación.",
+      "Co-founder y Director Ejecutivo. Ing. civil industrial eléctrico PUC, MBA IESE. +10 años en distribución, transmisión y generación.",
     email: "mzanartu@battex.cl",
     linkedin: "https://www.linkedin.com/in/maximiliano-zanartu/"
   },
@@ -130,19 +130,16 @@ const TEAM: TeamMember[] = [
     bio:
       "Co-founder. Ing. civil industrial eléctrico PUC, MBA Green Energies & Sustainable Business. +10 años en regulación y mercados eléctricos.",
     email: "jvial@battex.cl",
-    linkedin: "https://www.linkedin.com/in/tu-perfil-juan/"
+    //linkedin: "https://www.linkedin.com/in/tu-perfil-juan/"
   },
   {
     name: "Javier Calvo",
     bio:
       "Co-founder. Ing. civil mecánico PUC, Master Sustainable Energy Systems. +10 años en sistemas de energía térmica.",
     email: null,
-    linkedin: "https://www.linkedin.com/in/tu-perfil-javier/"
+    //linkedin: "https://www.linkedin.com/in/tu-perfil-javier/"
   }
 ];
-
-
-
 
 
 

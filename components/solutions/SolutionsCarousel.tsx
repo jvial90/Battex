@@ -20,7 +20,7 @@ const SLIDES: Slide[] = [
     heading: "Gestión de consumo en horas punta",
     body:
       "Cargamos y descargamos en las horas correctas con nuestro software AI. " +
-      "Control remoto y simple - déjalo en nuestras manos.",
+      "Control remoto y simple -> déjalo en nuestras manos.",
     image: "/solutions/sol-1.jpg", // put your file in /public/solutions/sol-1.jpg
     alt: "",
   },
@@ -39,7 +39,7 @@ const SLIDES: Slide[] = [
     title: "BATTEX Back Up",
     heading: "Dale confiabilidad a tu suministro",
     body:
-      "Que tu operación no sufra más con los cortes de suministro " +
+      "Que tu operación no sufra más con los cortes de suministro. " +
       "Te otorgamos un servicio diseñado para cuidar tus equipos más críticos",
     image: "/solutions/sol-3.jpg",
     alt: "",
@@ -49,7 +49,7 @@ const SLIDES: Slide[] = [
     title: "BATTEX Less Diesel",
     heading: "- diesel = + ahorro y - emisiones",
     body:
-      "Un software diseñado para optimizar tu consumo diésel" +
+      "Un software diseñado para optimizar y simplificar tu operación de generadores. " +
       "Complementado con baterías cuando sea necesario",
     image: "/solutions/sol-4.jpg",
     alt: "",

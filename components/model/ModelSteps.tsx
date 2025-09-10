@@ -15,23 +15,23 @@ const DEFAULT_STEPS: Step[] = [
   {
     key: "design",
     num: "1.",
-    title: "Project design",
+    title: "Ejecución Proyecto",
     body:
-      "We design the project to your needs and manage the installation of the battery and associated systems.",
+      "Nos encargamos desde el diseño a tu medida hasta la ejecución del proyecto con equipos de calidad.",
   },
   {
     key: "operation",
     num: "2.",
-    title: "Smart operation",
+    title: "Operación Inteligente",
     body:
-      "We operate the battery optimally with our AI software to reduce Energy Price and Peak Power charges.",
+      "Operamos la batería de manera óptima con nuestro software de inteligencia artificial para reducir tus costos.",
   },
   {
     key: "finance",
     num: "3.",
-    title: "Financing solutions",
+    title: "Soluciones Financieras",
     body:
-      "Self-financed, co-financed, or 100% financed options to accelerate adoption with minimal CAPEX.",
+      "Auto-financiado, Co-financiado, o 100%-financiado: Te ayudamos con la solución financiera que se adapte mejor a tus requisitos.",
   },
 ];
 
