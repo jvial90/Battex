@@ -108,8 +108,6 @@ function useActiveSection(ids: string[], headerOffset = 96) {
   return activeId;
 }
 
-
-
 type TeamMember = {
   name: string;
   bio: string;
@@ -119,29 +117,13 @@ type TeamMember = {
 
 const TEAM: TeamMember[] = [
   {
-    name: "Maximiliano ZaÑartu",
+    name: "Nuestro Equipo",
     bio:
-      "Co-founder y Director Ejecutivo. Ing. civil industrial eléctrico PUC, MBA IESE. +10 años en distribución, transmisión y generación.",
-    email: "mzanartu@battex.cl",
-    linkedin: "https://www.linkedin.com/in/maximiliano-zanartu/"
-  },
-  {
-    name: "Juan Luis Vial",
-    bio:
-      "Co-founder. Ing. civil industrial eléctrico PUC, MBA Green Energies & Sustainable Business. +10 años en regulación y mercados eléctricos.",
-    email: "jvial@battex.cl",
-    //linkedin: "https://www.linkedin.com/in/tu-perfil-juan/"
-  },
-  {
-    name: "Javier Calvo",
-    bio:
-      "Co-founder. Ing. civil mecánico PUC, Master Sustainable Energy Systems. +10 años en sistemas de energía térmica.",
+      "Contamos con un equipo multidisciplinario de especialistas en ingeniería eléctrica, mecánica y modelos de negocio energéticos. Contamos con más de 10 años de experiencia en diseño, ejecución y operación de proyectos de energía, regulación y mercados eléctricos, combinando conocimiento técnico, trabajo en terreno e inteligencia artificial para entregar soluciones de almacenamiento que se adaptan a cada cliente.",
     email: null,
-    //linkedin: "https://www.linkedin.com/in/tu-perfil-javier/"
+    linkedin: null
   }
 ];
-
-
 
 
 
