@@ -46,8 +46,8 @@ const SLIDES: Slide[] = [
   },
   {
     id: "Gx Diesel",
-    title: "BATTEX Less Diesel",
-    heading: "- diesel = + ahorro y - emisiones",
+    title: "Gestión corte de punta selectivo",
+    heading: "Reduce tu dependencia al diésel",
     body:
       "Un software diseñado para optimizar y simplificar tu operación de generadores. " +
       "Complementado con baterías cuando sea necesario",

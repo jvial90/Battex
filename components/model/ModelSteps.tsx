@@ -1,11 +1,11 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { ArrowRight, BatteryCharging, Brain, TrendingUp } from "lucide-react";
 import React from "react";
 
 type Step = {
-  key: "design" | "operation" | "finance";
+  key: "design" | "finance" | "operation";
   num: string;
   title: string;
   body: string;
@@ -14,24 +14,21 @@ type Step = {
 const DEFAULT_STEPS: Step[] = [
   {
     key: "design",
-    num: "1.",
-    title: "Ejecución Proyecto",
-    body:
-      "Nos encargamos desde el diseño a tu medida hasta la ejecución del proyecto con equipos de calidad.",
-  },
-  {
-    key: "operation",
-    num: "2.",
-    title: "Operación Inteligente",
-    body:
-      "Operamos la batería de manera óptima con nuestro software de inteligencia artificial para reducir tus costos.",
+    num: "01",
+    title: "Diseño Proyecto BESS",
+    body: "Analizamos tu consumo eléctrico, dimensionamos el sistema y diseñamos el proyecto a tu medida con equipos de calidad.",
   },
   {
     key: "finance",
-    num: "3.",
-    title: "Soluciones Financieras",
-    body:
-      "Auto-financiado, Co-financiado, o 100%-financiado: Te ayudamos con la solución financiera que se adapte mejor a tus requisitos.",
+    num: "02",
+    title: "Soluciones de Financiamiento",
+    body: "Auto-financiado, co-financiado o 100% financiado: estructuramos la solución financiera que mejor se adapta a tus requisitos.",
+  },
+  {
+    key: "operation",
+    num: "03",
+    title: "Operación Inteligente y Mantenimiento",
+    body: "Operamos el sistema de forma óptima con inteligencia artificial para maximizar tus ahorros eléctricos y asegurar la continuidad operacional.",
   },
 ];
 
@@ -42,97 +39,94 @@ export default function ModelSteps({
   items?: Step[];
   primary?: string;
 }) {
-  // used to pause icon pulse while any card is hovered (nice micro-interaction)
   const [paused, setPaused] = React.useState(false);
 
-  return (
-    <div className="grid md:grid-cols-3 gap-6">
-      {items.map((s, i) => (
-        <motion.div
-          key={s.key}
-          onHoverStart={() => setPaused(true)}
-          onHoverEnd={() => setPaused(false)}
-          whileHover={{ y: -6, boxShadow: "0 12px 28px rgba(0,0,0,0.12)" }}
-          transition={{ type: "spring", stiffness: 380, damping: 26 }}
-          className="rounded-2xl"
+  const elements: React.ReactNode[] = [];
+
+  items.forEach((s, i) => {
+    elements.push(
+      <motion.div
+        key={s.key}
+        onHoverStart={() => setPaused(true)}
+        onHoverEnd={() => setPaused(false)}
+        whileHover={{ y: -6 }}
+        transition={{ type: "spring", stiffness: 380, damping: 26 }}
+        className="rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-sm flex flex-col"
+      >
+        {/* Card header with gradient + icon + watermark number */}
+        <div
+          className="px-6 py-5 flex items-center justify-between"
+          style={{
+            background: `linear-gradient(135deg, ${primary}18 0%, ${primary}08 100%)`,
+          }}
         >
-          <Card className="rounded-2xl border border-slate-200 shadow-sm">
-            <CardContent className="p-6">
-              {/* Number + Icon */}
-              <div className="flex items-start gap-4">
-                <div className="text-3xl font-black" style={{ color: primary }}>
-                  {s.num}
-                </div>
+          <motion.div
+            aria-hidden="true"
+            className="h-14 w-14 rounded-2xl grid place-items-center shadow-sm"
+            style={{
+              background: `linear-gradient(135deg, ${primary}33 0%, ${primary}18 100%)`,
+              border: `1.5px solid ${primary}44`,
+            }}
+            animate={
+              paused
+                ? { scale: 1, opacity: 1 }
+                : { scale: [1, 1.07, 1], opacity: [0.92, 1, 0.92] }
+            }
+            transition={{
+              duration: 2.2,
+              ease: "easeInOut",
+              repeat: paused ? 0 : Infinity,
+              delay: i * 0.2,
+            }}
+          >
+            {s.key === "design" && (
+              <BatteryCharging size={28} strokeWidth={1.7} style={{ color: primary }} />
+            )}
+            {s.key === "finance" && (
+              <TrendingUp size={28} strokeWidth={1.7} style={{ color: primary }} />
+            )}
+            {s.key === "operation" && (
+              <Brain size={28} strokeWidth={1.7} style={{ color: primary }} />
+            )}
+          </motion.div>
 
-                {/* Icon container with subtle pulse */}
-                <motion.div
-                  aria-hidden="true"
-                  className="h-12 w-12 rounded-xl grid place-items-center ring-1"
-                  style={{ background: `${primary}14`, borderColor: `${primary}33` }}
-                  animate={
-                    paused
-                      ? { scale: 1, opacity: 1 }
-                      : { scale: [1, 1.06, 1], opacity: [0.95, 1, 0.95] }
-                  }
-                  transition={{
-                    duration: 2.1,
-                    ease: "easeInOut",
-                    repeat: paused ? 0 : Infinity,
-                    delay: i * 0.15,
-                  }}
-                >
-                  {s.key === "design" && <DesignIcon color={primary} />}
-                  {s.key === "operation" && <OperationIcon color={primary} />}
-                  {s.key === "finance" && <FinanceIcon color={primary} />}
-                </motion.div>
-              </div>
+          {/* Watermark number */}
+          <span
+            className="text-5xl font-black leading-none select-none"
+            style={{ color: `${primary}22` }}
+          >
+            {s.num}
+          </span>
+        </div>
 
-              {/* Text */}
-              <h3 className="mt-4 text-lg font-semibold">{s.title}</h3>
-              <p className="mt-2 text-sm text-slate-700">{s.body}</p>
-            </CardContent>
-          </Card>
-        </motion.div>
-      ))}
+        {/* Card body */}
+        <div className="px-6 py-5 flex-1 flex flex-col">
+          <div
+            className="h-0.5 w-10 rounded-full mb-4"
+            style={{ background: primary }}
+          />
+          <h3 className="text-lg font-bold text-slate-900">{s.title}</h3>
+          <p className="mt-2 text-sm text-slate-600 leading-relaxed">{s.body}</p>
+        </div>
+      </motion.div>
+    );
+
+    if (i < items.length - 1) {
+      elements.push(
+        <div
+          key={`arrow-${i}`}
+          className="hidden md:flex items-center justify-center self-center pb-6"
+        >
+          <ArrowRight className="h-5 w-5 text-slate-300" />
+        </div>
+      );
+    }
+  });
+
+  return (
+    <div className="grid md:grid-cols-[1fr_auto_1fr_auto_1fr] gap-4 items-stretch">
+      {elements}
     </div>
   );
 }
 
-/* ====== Minimal “AI-style” SVG icons ====== */
-
-function DesignIcon({ color = "#5B21E6" }: { color?: string }) {
-  return (
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" role="img">
-      {/* compass/ruler */}
-      <path d="M4 18h10M6 14l6-10M10 6l8 12" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
-      <circle cx="10" cy="6" r="1.6" fill={color} />
-    </svg>
-  );
-}
-
-function OperationIcon({ color = "#5B21E6" }: { color?: string }) {
-  return (
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" role="img">
-      {/* gear */}
-      <circle cx="12" cy="12" r="3.5" stroke={color} strokeWidth="1.8" />
-      <path d="M12 2v2.2M12 19.8V22M4.2 12H2M22 12h-2.2M5 5l1.6 1.6M17.4 17.4 19 19M5 19l1.6-1.6M17.4 6.6 19 5"
-            stroke={color} strokeWidth="1.6" strokeLinecap="round" />
-      <path d="M20 8l.7 1.4L22 10l-1.3.6L20 12l-.7-1.4L18 10l1.3-.6L20 8Z" fill={color} />
-    </svg>
-  );
-}
-
-function FinanceIcon({ color = "#5B21E6" }: { color?: string }) {
-  return (
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" role="img">
-      {/* stacked coins */}
-      <ellipse cx="9" cy="16" rx="4.5" ry="2.2" stroke={color} strokeWidth="1.6" />
-      <path d="M13.5 16c0 1.2-2 2.2-4.5 2.2S4.5 17.2 4.5 16M13.5 13.8c0 1.2-2 2.2-4.5 2.2S4.5 15 4.5 13.8"
-            stroke={color} strokeWidth="1.6" strokeLinecap="round" />
-      {/* leaf for sustainable finance */}
-      <path d="M18.5 11c1.8 0 3.5 1.4 3 3.4-.6 2.7-3.7 4-6.2 4.1 0-2.9.8-7.5 3.2-7.5Z"
-            stroke={color} strokeWidth="1.6" fill={`${color}14`} />
-      <path d="M16.2 17.5c.7-1.7 2.1-3.2 3.7-4.1" stroke={color} strokeWidth="1.6" strokeLinecap="round" />
-    </svg>
-  );
-}

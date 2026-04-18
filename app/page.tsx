@@ -110,19 +110,51 @@ function useActiveSection(ids: string[], headerOffset = 96) {
 
 type TeamMember = {
   name: string;
+  initials: string;
+  role: string;
   bio: string;
+  photo?: string | null;
   email?: string | null;
   linkedin?: string | null;
 };
 
 const TEAM: TeamMember[] = [
   {
-    name: "Nuestro Equipo",
-    bio:
-      "Contamos con un equipo multidisciplinario de especialistas en ingeniería eléctrica, mecánica y modelos de negocio energéticos. Contamos con más de 10 años de experiencia en diseño, ejecución y operación de proyectos de energía, regulación y mercados eléctricos, combinando conocimiento técnico, trabajo en terreno e inteligencia artificial para entregar soluciones de almacenamiento que se adaptan a cada cliente.",
-    email: null,
-    linkedin: null
-  }
+    name: "Maximiliano Zañartu",
+    initials: "MZ",
+    role: "Co-founder",
+    bio: "Ingeniero civil industrial eléctrico PUC, MBA IESE Business School. +10 años en distribución, transmisión y generación eléctrica. Desarrollo de software, decisión estratégica y apoyo comercial.",
+    photo: "/team/max.jpeg",
+    email: "mzanartu@battex.cl",
+    linkedin: "https://www.linkedin.com/in/maximiliano-zanartu/",
+  },
+  {
+    name: "Juan Luis Vial",
+    initials: "JV",
+    role: "Co-founder",
+    bio: "Ingeniero civil industrial eléctrico PUC, MBA Green Energies and Sustainable Business (Italia 2022). +10 años en regulación y mercados eléctricos. Relación comercial, alianzas y estructuración financiera.",
+    photo: "/team/juan.jpg",
+    email: "jvial@battex.cl",
+    linkedin: "https://www.linkedin.com/in/juanviallavin/",
+  },
+  {
+    name: "Javier Calvo",
+    initials: "JC",
+    role: "Co-founder",
+    bio: "Ingeniero civil mecánico PUC, Master Sustainable Energy Systems (Suecia 2020). +10 años en sistemas de energía térmica. Inversionista y apoyo IoT técnico.",
+    photo: "/team/javier.jpeg",
+    email: "jcalvo@battex.cl",
+    linkedin: "https://www.linkedin.com/in/javier-calvo-980785a3/",
+  },
+  {
+    name: "Alejandro Bañados",
+    initials: "AB",
+    role: "CTO",
+    bio: "Ingeniero civil industrial PUC, MSc in Quantitative Economics en UCLA (USA 2026). +5 años de experiencia en modelación y optimización de sistemas energéticos.",
+    photo: null,
+    email: "abanados@battex.cl",
+    linkedin: "https://www.linkedin.com/in/alejandrobanados/",
+  },
 ];
 
 
@@ -140,27 +172,45 @@ const SECTIONS = [
 
 const activeId = useActiveSection(SECTIONS.map(s => s.id), 96);
 
-// --- Google Forms submission state/handlers ---
+// --- Hero form state ---
 const [leadEmail, setLeadEmail] = React.useState("");
 const [submitting, setSubmitting] = React.useState(false);
 const [submitted, setSubmitted] = React.useState(false);
 const [ok, setOk] = React.useState<null | boolean>(null);
 
 function handleGFormSubmit(e: React.FormEvent) {
-  // The POST goes straight to Google; we just flag the UI
   setSubmitting(true);
   setOk(null);
   setSubmitted(true);
 }
 
 function handleIframeLoad() {
-  // The hidden iframe loads once on mount and again after submit.
-  // Only act after a submit.
   if (submitted) {
     setSubmitting(false);
     setOk(true);
     setLeadEmail("");
     setSubmitted(false);
+  }
+}
+
+// --- Contact section form state ---
+const [contactEmail, setContactEmail] = React.useState("");
+const [contactSubmitting, setContactSubmitting] = React.useState(false);
+const [contactSubmitted, setContactSubmitted] = React.useState(false);
+const [contactOk, setContactOk] = React.useState<null | boolean>(null);
+
+function handleContactSubmit(e: React.FormEvent) {
+  setContactSubmitting(true);
+  setContactOk(null);
+  setContactSubmitted(true);
+}
+
+function handleContactIframeLoad() {
+  if (contactSubmitted) {
+    setContactSubmitting(false);
+    setContactOk(true);
+    setContactEmail("");
+    setContactSubmitted(false);
   }
 }
   return (
@@ -250,10 +300,10 @@ function handleIframeLoad() {
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <img src={THEME.logo} alt="Battex" className="h-10 w-auto mb-6" />
             <h1 className="text-4xl md:text-5xl font-bold leading-[1.1]">
-              Súmate a la revolución de baterías apoyado por expertos
+              Maximiza los ahorros eléctricos de tu empresa con baterías inteligentes
             </h1>
             <p className="mt-4 text-lg text-slate-700">
-              Innovando para apoyar <b>industrias</b> a <b>eficientar su consumo eléctrico</b>.
+              Diseñamos y desarrollamos <b>proyectos BESS</b> para consumos industriales, y los operamos inteligentemente para extraer el <b>mayor ahorro eléctrico posible</b>.
             </p>
             
             {/* Hidden iframe keeps the page in place and lets us detect completion */}
@@ -334,69 +384,125 @@ function handleIframeLoad() {
 
 
 <Section id="equipo" title="Equipo">
-  <div className="grid md:grid-cols-3 gap-6">
+  <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
     {TEAM.map((p) => (
-      <Card key={p.name} className="rounded-2xl">
-        <CardContent className="p-6">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <div className="font-semibold">{p.name}</div>
-              <p className="mt-2 text-sm text-slate-700">{p.bio}</p>
-
-              {/* email (optional) */}
-              {p.email && p.email !== "—" && (
-                <p className="mt-3 text-xs">
-                  <a
-                    href={`mailto:${p.email}`}
-                    className="text-slate-500 hover:text-slate-700 underline"
-                  >
-                    {p.email}
-                  </a>
-                </p>
-              )}
+      <Card key={p.name} className="rounded-2xl flex flex-col">
+        <CardContent className="p-6 flex flex-col items-center text-center h-full">
+          {/* Avatar: foto real o placeholder con iniciales */}
+          {p.photo ? (
+            <Image
+              src={p.photo}
+              alt={p.name}
+              width={72}
+              height={72}
+              className="h-32 w-32 rounded-full object-cover mb-4 grayscale hover:grayscale-0 hover:scale-110 transition-all duration-300"
+            />
+          ) : (
+            <div
+              className="h-32 w-32 rounded-full flex items-center justify-center mb-4 text-white font-bold text-lg select-none"
+              style={{ background: "#5B21E6" }}
+            >
+              {p.initials}
             </div>
+          )}
 
-            {/* LinkedIn icon button (optional) */}
-            {p.linkedin && (
-              <a
-                href={p.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`LinkedIn profile of ${p.name}`}
-                title="LinkedIn"
-                className="shrink-0 inline-flex h-9 w-9 items-center justify-center
-                           rounded-full border border-slate-200 text-slate-500
-                           hover:text-[#0A66C2] hover:border-[#0A66C2] transition-colors"
-              >
-                <Linkedin className="h-4 w-4" />
-              </a>
-            )}
-          </div>
+          <div className="font-semibold text-slate-900">{p.name}</div>
+          <div className="text-xs font-medium text-[#5B21E6] mt-0.5 mb-3">{p.role}</div>
+
+          {p.bio && (
+            <p className="text-sm text-slate-600 leading-relaxed">{p.bio}</p>
+          )}
+
+          {p.email && (
+            <a
+              href={`mailto:${p.email}`}
+              className="mt-auto pt-4 text-xs font-medium text-[#5B21E6] hover:underline"
+            >
+              {p.email}
+            </a>
+          )}
+
+          {p.linkedin && (
+            <a
+              href={p.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`LinkedIn de ${p.name}`}
+              className="mt-2 inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 text-slate-500 hover:text-[#0A66C2] hover:border-[#0A66C2] transition-colors"
+            >
+              <Linkedin className="h-4 w-4" />
+            </a>
+          )}
         </CardContent>
       </Card>
     ))}
   </div>
 </Section>
 
+{/* Sección de confianza */}
+<Section>
+  <div className="text-center">
+    <p className="text-sm font-semibold uppercase tracking-widest text-slate-400 mb-8">
+      Con el apoyo de
+    </p>
+    <div className="flex flex-wrap items-center justify-center gap-10">
+      <Image
+        src="/Start-Up_Chile_logo.png"
+        alt="Start-Up Chile"
+        width={480}
+        height={160}
+        className="h-40 w-auto object-contain opacity-80 hover:opacity-100 transition-opacity"
+      />
+    </div>
+  </div>
+</Section>
+
 <Section id="contacto">
   <div className="rounded-3xl border border-slate-200 bg-white p-8 md:p-12 text-center shadow-sm">
     <h3 className="text-2xl md:text-3xl font-bold">
-      Contáctanos para diseñar una solución a tu medida 
+      Contáctanos para diseñar una solución a tu medida
     </h3>
-    <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+
+    <iframe name="gform_contact_iframe" style={{ display: "none" }} onLoad={handleContactIframeLoad} />
+
+    <form
+      action="https://docs.google.com/forms/d/e/1FAIpQLSdEkTW_520j7NSikTBe5Qd3DyI4VheM1BFT4id9UrB8-hA1SA/formResponse"
+      method="POST"
+      target="gform_contact_iframe"
+      onSubmit={handleContactSubmit}
+      className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3"
+    >
       <div className="relative w-full max-w-md">
         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-        <Input placeholder="tu@empresa.com" className="pl-9 h-12 rounded-2xl" />
+        <Input
+          type="email"
+          name="entry.586447229"
+          value={contactEmail}
+          onChange={(e) => setContactEmail(e.target.value)}
+          placeholder="tu@empresa.com"
+          className="pl-9 h-12 rounded-2xl"
+          required
+        />
       </div>
       <Button
+        type="submit"
         size="lg"
+        disabled={contactSubmitting}
         className="rounded-2xl transition-colors bg-[#5B21E6] hover:bg-gradient-to-r hover:from-[#5B21E6] hover:to-[#A78BFA] text-white shadow-sm hover:shadow"
       >
-        Enviar
+        {contactSubmitting ? "Enviando…" : "Enviar"}
       </Button>
-    </div>
+    </form>
+
+    {contactOk === true && (
+      <p className="mt-3 text-xs text-green-600">¡Gracias! Te contactaremos pronto.</p>
+    )}
+
     <p className="mt-4 text-sm text-slate-600">
-      También puedes escribirnos a <a className="underline" href={`mailto:${THEME.email}`}>{THEME.email}</a> o llamar al {THEME.phone}.
+      También puedes escribirnos a{" "}
+      <a className="underline" href="mailto:jvial@battex.cl">jvial@battex.cl</a>
+      {" "}o{" "}
+      <a className="underline" href="mailto:mzanartu@battex.cl">mzanartu@battex.cl</a>
     </p>
   </div>
 </Section>
