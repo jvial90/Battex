@@ -83,17 +83,23 @@ function useActiveSection(ids: string[], headerOffset = 96) {
   React.useEffect(() => {
     if (!ids.length) return;
 
+    // When near the bottom of the page, activate the last section
+    function onScroll() {
+      const nearBottom =
+        window.innerHeight + window.scrollY >= document.body.scrollHeight - 80;
+      if (nearBottom) setActiveId(ids[ids.length - 1]);
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+
     const io = new IntersectionObserver(
       (entries) => {
-        // Prefer the *latest* section that became visible
         entries.forEach((e) => {
           if (e.isIntersecting) setActiveId(e.target.id);
         });
       },
       {
-        // account for sticky header and favor the section near the middle
-        rootMargin: `-${headerOffset}px 0px -60% 0px`,
-        threshold: [0.2, 0.4, 0.6],
+        rootMargin: `-${headerOffset}px 0px -50% 0px`,
+        threshold: [0.1, 0.3],
       }
     );
 
@@ -102,7 +108,10 @@ function useActiveSection(ids: string[], headerOffset = 96) {
       if (el) io.observe(el);
     });
 
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
   }, [ids, headerOffset]);
 
   return activeId;
@@ -132,7 +141,7 @@ const TEAM: TeamMember[] = [
     name: "Juan Luis Vial",
     initials: "JV",
     role: "Co-founder",
-    bio: "Ingeniero civil industrial eléctrico PUC, MBA Green Energies and Sustainable Business (Italia 2022). +10 años en regulación y mercados eléctricos. Relación comercial, alianzas y estructuración financiera.",
+    bio: "Ingeniero civil industrial eléctrico PUC, MBA Green Energies and Sustainable Business (Italia 2022). +10 años en regulación y mercados eléctricos. Decisión estratégica, relación comercial, alianzas y estructuración financiera.",
     photo: "/team/juan.jpg",
     email: "jvial@battex.cl",
     linkedin: "https://www.linkedin.com/in/juanviallavin/",
@@ -141,7 +150,7 @@ const TEAM: TeamMember[] = [
     name: "Javier Calvo",
     initials: "JC",
     role: "Co-founder",
-    bio: "Ingeniero civil mecánico PUC, Master Sustainable Energy Systems (Suecia 2020). +10 años en sistemas de energía térmica. Inversionista y apoyo IoT técnico.",
+    bio: "Ingeniero civil mecánico PUC, Master Sustainable Energy Systems (Suecia 2020). +10 años en sistemas de energía térmica. Apoyo part-time en desarrollo IoT y soluciones de control BESS remoto.",
     photo: "/team/javier.jpeg",
     email: "jcalvo@battex.cl",
     linkedin: "https://www.linkedin.com/in/javier-calvo-980785a3/",
@@ -151,7 +160,7 @@ const TEAM: TeamMember[] = [
     initials: "AB",
     role: "CTO",
     bio: "Ingeniero civil industrial PUC, MSc in Quantitative Economics en UCLA (USA 2026). +5 años de experiencia en modelación y optimización de sistemas energéticos.",
-    photo: null,
+    photo: "/team/alejandro.jpeg",
     email: "abanados@battex.cl",
     linkedin: "https://www.linkedin.com/in/alejandrobanados/",
   },
@@ -215,6 +224,21 @@ function handleContactIframeLoad() {
 }
   return (
     <main className="min-h-screen bg-gradient-to-b from-white to-slate-50 text-slate-900">
+
+      {/* WhatsApp floating button */}
+      <a
+        href="https://wa.me/56932883782"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Contáctanos por WhatsApp"
+        className="fixed bottom-6 right-6 z-50 flex items-center justify-center h-14 w-14 rounded-full shadow-lg hover:scale-110 transition-transform"
+        style={{ background: "#25D366" }}
+      >
+        <svg viewBox="0 0 24 24" fill="white" className="h-7 w-7">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.857L.054 23.617a.75.75 0 0 0 .906.919l5.934-1.545A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.726 9.726 0 0 1-4.953-1.354l-.355-.211-3.673.957.99-3.574-.232-.368A9.715 9.715 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/>
+        </svg>
+      </a>
       
       
       {/* Header */}
@@ -268,13 +292,14 @@ function handleContactIframeLoad() {
 
       {/* CTA inside the pill */}
       <li className="pl-2">
-        <Button
+        <SmoothLink
+          to="#contacto"
           className="h-auto text-sm font-semibold rounded-full px-5 py-2
                      bg-gradient-to-r from-[#5B21E6] to-[#A78BFA]
-                     text-white shadow-md hover:shadow-lg"
+                     text-white shadow-md hover:shadow-lg inline-block"
         >
           Solicitar asesoría
-        </Button>
+        </SmoothLink>
       </li>
     </ul>
   </div>

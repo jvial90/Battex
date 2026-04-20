@@ -46,7 +46,7 @@ const SLIDES: Slide[] = [
   },
   {
     id: "Gx Diesel",
-    title: "Gestión corte de punta selectivo",
+    title: "BATTEX Corte Punta Selectivo",
     heading: "Reduce tu dependencia al diésel",
     body:
       "Un software diseñado para optimizar y simplificar tu operación de generadores. " +
